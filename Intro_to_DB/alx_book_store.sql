@@ -10,6 +10,14 @@ mydb = mysql.connector.connect(
 cursor = mydb.cursor()
 
 mycursor.execute("""
+	CREATE TABLE Authors (
+		author_id INT AUTO_INCREMENT PRIMARY KEY,
+		author_name VARCHAR(215)
+	);
+	""")
+print("Table created successfully!")
+
+mycursor.execute("""
 	CREATE TABLE books (
 		book_id INT AUTO_INCREMENT PRIMARY KEY,
 		title VARCHAR(130),
@@ -17,14 +25,6 @@ mycursor.execute("""
 		price DOUBLE,
 		publication_date DATE,
 		FOREIGN KEY (author_id) REFERENCES Authors(author_id)
-	);
-	""")
-print("Table created successfully!")
-
-mycursor.execute("""
-	CREATE TABLE Authors (
-		author_id INT AUTO_INCREMENT PRIMARY KEY,
-		author_name VARCHAR(215)
 	);
 	""")
 print("Table created successfully!")
@@ -40,7 +40,7 @@ mycursor.execute("""
 print("Table created successfully!")
 
 mycursor.execute("""
-	CREATE TABLE Stores (
+	CREATE TABLE Orders (
 		order_id INT AUTO_INCREMENT PRIMARY KEY,
 		customer_id INT,
 		order_date DATE,
@@ -51,12 +51,19 @@ print("Table created successfully!")
 
 mycursor.execute("""
 	CREATE TABLE Order_Details (
-		orderderailid INT AUTO_INCREMENT PRIMARY KEY,
+		orderdetailid INT AUTO_INCREMENT PRIMARY KEY,
 		order_id INT,
 		book_id INT,
 		quantity DOUBLE,
-		FOREIGN KEY (order_id) REFERENCES Orders(book_id),
+		FOREIGN KEY (order_id) REFERENCES Orders(order_id),
 		FOREIGN KEY (book_id) REFERENCES Books(book_id)
 	)
 	""")
 print("Table created successfully!")
+	
+# Commit the changes
+mydb.commit()
+
+# Close the connection
+cursor.close()
+mydb.close()
