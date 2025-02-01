@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
     database="alx_book_store"
 )
 
-cursor = mydb.cursor()
+mycursor = mydb.cursor()
 
 mycursor.execute("""
 	CREATE TABLE Authors (
@@ -57,7 +57,7 @@ mycursor.execute("""
 		quantity DOUBLE,
 		FOREIGN KEY (order_id) REFERENCES Orders(order_id),
 		FOREIGN KEY (book_id) REFERENCES Books(book_id)
-	)
+	);
 	""")
 print("Table created successfully!")
 	
@@ -65,5 +65,6 @@ print("Table created successfully!")
 mydb.commit()
 
 # Close the connection
-cursor.close()
+mycursor.close()
 mydb.close()
+
